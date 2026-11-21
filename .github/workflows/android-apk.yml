@@ -27,7 +27,7 @@ jobs:
       - name: Extract project
         run: |
           mkdir project
-          unzip -q PhotoReminder-CloudBuild.zip -d project
+          unzip -q PhotoReminder-CloudBuild-FIXED.zip -d project
           find project -name gradlew
 
       - name: Build APK
