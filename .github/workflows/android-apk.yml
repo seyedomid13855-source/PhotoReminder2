@@ -1,10 +1,11 @@
+
 name: Build Photo Reminder APK
 
 on:
   workflow_dispatch:
   push:
     paths:
-            - 'PhotoReminder-CloudBuild-FIXED.zip'
+      - 'PhotoReminder-CloudBuild-FIXED.zip'
       - '.github/workflows/android-apk.yml'
 
 jobs:
@@ -28,22 +29,21 @@ jobs:
         run: |
           mkdir project
           unzip -q PhotoReminder-CloudBuild-FIXED.zip -d project
-          find project -name gradlew
+          find project -type f -name gradlew
+
       - name: Build APK
         run: |
           GRADLEW=$(find project -type f -name gradlew | head -n 1)
-
           if [ -z "$GRADLEW" ]; then
             echo "gradlew not found!"
             find project -maxdepth 5 -type f
             exit 1
           fi
-
           PROJECT_DIR=$(dirname "$GRADLEW")
           cd "$PROJECT_DIR"
           chmod +x gradlew
           ./gradlew assembleDebug
-    
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
